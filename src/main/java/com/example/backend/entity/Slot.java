@@ -27,8 +27,4 @@ public class Slot extends AuditableEntity{
     @Enumerated(EnumType.STRING)
     private SlotStatus status;
 
-    
-
-
-    
 }

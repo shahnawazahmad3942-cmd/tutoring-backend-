@@ -27,6 +27,5 @@ public class Booking extends AuditableEntity{
     @Column(name = "type", nullable = false)
     @Enumerated(EnumType.STRING)
     private BookingType type;
-
     
 }
