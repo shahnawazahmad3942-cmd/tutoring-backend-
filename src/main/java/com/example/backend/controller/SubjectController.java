@@ -1,0 +1,73 @@
+package com.example.backend.controller;
+
+
+/* REST endpoints for subjects. Reads are public; writes require ADMIN. */
+import com.example.backend.dto.subject.SubjectRequest;
+import com.example.backend.dto.subject.SubjectResponse;
+import com.example.backend.service.SubjectService;
+
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/subjects")
+public class SubjectController {
+
+    private final SubjectService subjectService;
+
+
+    public SubjectController(SubjectService subjectService){
+        this.subjectService = subjectService;
+    }
+
+
+    @GetMapping
+    public ResponseEntity<List<SubjectResponse>> listActive() {
+        return ResponseEntity.ok(subjectService.listActive());
+    }
+
+
+    @GetMapping("/all")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<List<SubjectResponse>> listAll() {
+        return ResponseEntity.ok(subjectService.listAll());
+    }
+
+
+    @GetMapping("/{id}")
+    public ResponseEntity<SubjectResponse> getById(@PathVariable Long id){
+        return ResponseEntity.ok(subjectService.getById(id));
+    }
+
+
+    @PostMapping("/create")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<SubjectResponse> create(@Valid @RequestBody SubjectRequest request){
+        return ResponseEntity.status(HttpStatus.CREATED).body(subjectService.create(request));
+    }
+
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<SubjectResponse> update(@PathVariable Long id, @Valid @RequestBody SubjectRequest request){
+        return ResponseEntity.ok(subjectService.update(id, request));
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Void> deActivate(@PathVariable Long id){
+        subjectService.deActivate(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
+
+    
+
+    
+}
