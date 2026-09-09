@@ -60,6 +60,8 @@ public class PaymentServiceImpl implements PaymentService {
         this.creditPackageRepository = creditPackageRepository;
         this.transactionRepository = transactionRepository;
         this.razorpayKeyId = razorpayKeyId;
+        this.creditService = creditService;
+        this.webhookSecret = webhookSecret;
     }
 
     @Override
