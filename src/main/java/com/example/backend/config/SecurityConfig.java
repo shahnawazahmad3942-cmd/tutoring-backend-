@@ -49,6 +49,7 @@ public class SecurityConfig {
             .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/packages/all").hasRole("ADMIN")
             .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/packages", "/api/packages/*").permitAll()
             .requestMatchers(org.springframework.http.HttpMethod.GET, "/api/slots", "/api/slots/*").permitAll()
+            .requestMatchers(org.springframework.http.HttpMethod.POST, "/api/payments/webhook").permitAll()
             .anyRequest().authenticated()
         );
         
